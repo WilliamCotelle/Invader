@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgb(98, 88, 205);
+  height: 100vh;
+  width: 100vw;
+}
+.containerInvader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+#invader {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pixel {
+  border: 1px solid rgb(128, 142, 155);
+  background-color: rgb(209, 218, 226);
+}
+
+.configuration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: rgb(49, 71, 173);
+  width: 100%;
+}
+
+.configuration > * {
+  border: 1px solid rgb(49, 71, 173);
+  padding: 1rem;
+  margin: 1rem 0 1rem 0;
+  text-align: center;
+  font-size: 0.6rem;
+}
+.configuration :nth-child(1) {
+  border-radius: 8px 0 0 8px;
+}
+
+.configuration :nth-child(3) {
+  background-color: rgb(155, 104, 228);
+  border-radius: 0 8px 8px 0;
+  color: white;
+}
