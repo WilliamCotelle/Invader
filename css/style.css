@@ -51,3 +51,56 @@ body {
   border-radius: 0 8px 8px 0;
   color: white;
 }
+
+.palette {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 170px;
+  padding: 0.3rem;
+  background-color: rgb(71, 69, 163);
+  border-radius: 5px 0 0 5px;
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+  margin-left: 5px;
+  border-radius: 16px;
+  display: inline-block;
+}
+
+.white {
+  background-color: white;
+}
+
+.black {
+  background-color: rgb(72, 84, 96);
+}
+
+.orange {
+  background-color: rgb(251, 192, 71);
+}
+
+.green {
+  background-color: rgb(121, 234, 131);
+}
+.white:hover {
+  border: 2px solid black;
+  transition-delay: 0.9ms;
+}
+
+.black:hover {
+  border: 2px solid black;
+  transition-delay: 0.9ms;
+}
+
+.orange:hover {
+  border: 2px solid black;
+  transition-delay: 0.9ms;
+}
+
+.green:hover {
+  border: 2px solid black;
+  transition-delay: 0.9ms;
+}

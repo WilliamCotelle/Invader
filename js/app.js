@@ -1,71 +1,89 @@
-// valeur de nos éléments
-let gridSize = "";
-let pixelSize = "";
-let color = ["rgb(209, 218, 226)", "rgb(72, 84, 96)"];
-const invaderElem = document.getElementById("invader");
-const form = document.querySelector(".configuration");
+const app = {
+  drawingColor: "black",
+  colors: ["white", "black", "orange", "green"],
 
-//Formulaire
-const input = document.createElement("input");
-input.type = "number";
-input.placeholder = "Taille de la grille";
-input.value = gridSize;
-input.name = "gridSize";
-form.appendChild(input);
+  gridElem: document.querySelector("#invader"),
+  formElem: document.querySelector(".configuration"),
 
-const input2 = document.createElement("input");
-input2.type = "number";
-input2.placeholder = "Taille des pixels";
-input2.value = pixelSize;
-input2.name = "pixelSize";
-form.appendChild(input2);
+  init() {
+    app.createForm();
+    app.gridElem.addEventListener("click", function (evt) {
+      if (evt.target.classList.contains("pixel")) {
+        app.changePixelColor(evt.target);
+      }
+    });
+    app.createPalette();
+    app.generateGrid(10, 20);
+  },
 
-const submit = document.createElement("input");
-submit.type = "submit";
-form.appendChild(submit);
+  changePixelColor(pixel) {
+    if (pixel.classList.length > 1 && pixel.classList[1] === app.drawingColor) {
+      pixel.className = "pixel";
+    } else {
+      pixel.className = "pixel " + app.drawingColor;
+    }
+  },
 
-//Action du submit
-form.addEventListener("submit", function (action) {
-  action.preventDefault();
-  gridSize = input.value;
-  pixelSize = input2.value;
-  invaderElem.innerHTML = "";
-  generateGrid();
-});
+  createPalette() {
+    const paletteElem = document.createElement("div");
+    paletteElem.classList.add("palette");
+    for (const color of app.colors) {
+      const swatchElem = document.createElement("div");
+      swatchElem.classList.add("swatch");
+      swatchElem.classList.add(color);
+      swatchElem.setAttribute("data-color", color);
+      paletteElem.appendChild(swatchElem);
+    }
+    paletteElem.addEventListener("click", app.changeColor);
+    document.body.appendChild(paletteElem);
+  },
 
-// génére un pixel
-function createPixel() {
-  const pixelElem = document.createElement("div");
-  pixelElem.classList.add("pixel");
-  pixelElem.style.width = pixelSize + "px";
-  pixelElem.style.height = pixelSize + "px";
-  pixelElem.style.backgroundColor = color[0];
-  return pixelElem;
-}
+  changeColor(event) {
+    if (event.target.classList.contains("swatch")) {
+      app.drawingColor = event.target.getAttribute("data-color");
+    }
+  },
 
-// génére la grid
-function generateGrid() {
-  invaderElem.style.width = pixelSize * gridSize + "px";
-  invaderElem.style.height = pixelSize * gridSize + "px";
-  for (let position = 0; position < gridSize * gridSize; position++) {
-    const pixelElem = createPixel();
-    invaderElem.appendChild(pixelElem);
-  }
-}
-generateGrid();
+  createForm() {
+    const gridSizeInputElem = document.createElement("input");
+    const pixelSizeInputElem = document.createElement("input");
+    const submitButtonElem = document.createElement("button");
 
-// change la couleur de notre pixel
-function changePixelColor(pixel) {
-  if (pixel.style.backgroundColor === color[0]) {
-    pixel.style.backgroundColor = color[1];
-  } else {
-    pixel.style.backgroundColor = color[0];
-  }
-}
+    gridSizeInputElem.type = "number";
+    pixelSizeInputElem.type = "number";
+    submitButtonElem.type = "submit";
 
-// évént qui écoute le click de nos pixel
-invaderElem.addEventListener("click", function (evt) {
-  if (evt.target.classList.contains("pixel")) {
-    changePixelColor(evt.target);
-  }
-});
+    gridSizeInputElem.placeholder = "Taille de la grille";
+    pixelSizeInputElem.placeholder = "Taille des pixels";
+    submitButtonElem.textContent = "Valider";
+
+    app.formElem.appendChild(gridSizeInputElem);
+    app.formElem.appendChild(pixelSizeInputElem);
+    app.formElem.appendChild(submitButtonElem);
+
+    app.formElem.addEventListener("submit", function (event) {
+      event.preventDefault();
+      app.generateGrid(gridSizeInputElem.value, pixelSizeInputElem.value);
+    });
+  },
+
+  generateGrid(gridSize, pixelSize) {
+    app.gridElem.innerHTML = "";
+    app.gridElem.style.width = pixelSize * gridSize + "px";
+    app.gridElem.style.height = pixelSize * gridSize + "px";
+    for (let position = 0; position < gridSize * gridSize; position++) {
+      const pixelElem = app.createPixel(pixelSize);
+      app.gridElem.appendChild(pixelElem);
+    }
+  },
+
+  createPixel(pixelSize) {
+    const pixelElem = document.createElement("div");
+    pixelElem.classList.add("pixel");
+    pixelElem.style.width = pixelSize + "px";
+    pixelElem.style.height = pixelSize + "px";
+    return pixelElem;
+  },
+};
+
+app.init();
