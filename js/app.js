@@ -1,6 +1,6 @@
 // valeur de nos éléments
-let gridSize = 8;
-let pixelSize = 20;
+let gridSize = "";
+let pixelSize = "";
 let color = ["rgb(209, 218, 226)", "rgb(72, 84, 96)"];
 const invaderElem = document.getElementById("invader");
 const form = document.querySelector(".configuration");
@@ -9,20 +9,29 @@ const form = document.querySelector(".configuration");
 const input = document.createElement("input");
 input.type = "number";
 input.placeholder = "Taille de la grille";
-// input.value = gridSize;
+input.value = gridSize;
 input.name = "gridSize";
 form.appendChild(input);
 
 const input2 = document.createElement("input");
 input2.type = "number";
 input2.placeholder = "Taille des pixels";
-// input2.value = pixelSize;
+input2.value = pixelSize;
 input2.name = "pixelSize";
 form.appendChild(input2);
 
 const submit = document.createElement("input");
 submit.type = "submit";
 form.appendChild(submit);
+
+//Action du submit
+form.addEventListener("submit", function (action) {
+  action.preventDefault();
+  gridSize = input.value;
+  pixelSize = input2.value;
+  invaderElem.innerHTML = "";
+  generateGrid();
+});
 
 // génére un pixel
 function createPixel() {
