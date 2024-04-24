@@ -1,21 +1,24 @@
+// création de mon objet
 const app = {
-  drawingColor: "black",
-  colors: ["white", "black", "orange", "green"],
+  drawingColor: "black", // couleur du dessin initiale
+  colors: ["white", "black", "orange", "green"], // palette de couleur disponible
 
-  gridElem: document.querySelector("#invader"),
-  formElem: document.querySelector(".configuration"),
+  gridElem: document.querySelector("#invader"), // élément DOM de la grille
+  formElem: document.querySelector(".configuration"), // élément DOM du formulaire de config
 
   init() {
     app.createForm();
     app.gridElem.addEventListener("click", function (evt) {
       if (evt.target.classList.contains("pixel")) {
-        app.changePixelColor(evt.target);
+        // je verif si élément click est un pixel
+        app.changePixelColor(evt.target); // Changement couleur du pixel
       }
     });
     app.createPalette();
     app.generateGrid(10, 20);
   },
 
+  // Change la couleur du pixel sélectionné
   changePixelColor(pixel) {
     if (pixel.classList.length > 1 && pixel.classList[1] === app.drawingColor) {
       pixel.className = "pixel";
@@ -24,6 +27,7 @@ const app = {
     }
   },
 
+  // Init de la palette de couleurs pour dessins
   createPalette() {
     const paletteElem = document.createElement("div");
     paletteElem.classList.add("palette");
@@ -38,12 +42,14 @@ const app = {
     document.body.appendChild(paletteElem);
   },
 
+  // Applique la couleur sélectionnée comme couleur de dessin
   changeColor(event) {
     if (event.target.classList.contains("swatch")) {
       app.drawingColor = event.target.getAttribute("data-color");
     }
   },
 
+  // Crée le formulaire pour configurer la grill
   createForm() {
     const gridSizeInputElem = document.createElement("input");
     const pixelSizeInputElem = document.createElement("input");
@@ -67,6 +73,7 @@ const app = {
     });
   },
 
+  // Crée et affiche la grille basée sur les dimensions spécifiées
   generateGrid(gridSize, pixelSize) {
     app.gridElem.innerHTML = "";
     app.gridElem.style.width = pixelSize * gridSize + "px";
@@ -77,6 +84,7 @@ const app = {
     }
   },
 
+  // Crée un pixel avec la taille spécifiée
   createPixel(pixelSize) {
     const pixelElem = document.createElement("div");
     pixelElem.classList.add("pixel");
@@ -86,4 +94,4 @@ const app = {
   },
 };
 
-app.init();
+app.init(); // Lance l'initialisation de l'application
